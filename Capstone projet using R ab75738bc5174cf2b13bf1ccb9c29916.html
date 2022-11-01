@@ -1,0 +1,853 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Capstone projet using R</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ab75738b-c517-4cf2-b13b-f1ccb9c29916" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1592093506632-92ef342e2591?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 15.949999999999998%"/><h1 class="page-title">Capstone projet using <mark class="highlight-blue">R</mark></h1></header><div class="page-body"><h2 id="744cb271-19af-4dad-af4b-65d6918c7fe6" class=""><strong>Introduction</strong></h2><p id="e0433556-ccb9-473b-9e8f-8654ee53ba07" class="">
+</p><p id="7152f4c9-11ac-4899-9def-edc508e75869" class="">Hi, my name is <a href="https://www.linkedin.com/in/roman-pochtman-aa83b321a">Roman Pochtman</a> and I choose this project to begin my data analyst portfolio . During the 6 phases of <mark class="highlight-blue"><strong>APPAA</strong></mark>(<mark class="highlight-blue"><strong>ask</strong></mark><strong>, </strong><mark class="highlight-blue"><strong>prepare</strong></mark><strong>, </strong><mark class="highlight-blue"><strong>process</strong></mark><strong>, </strong><mark class="highlight-blue"><strong>analyze</strong></mark><strong>, </strong>and <mark class="highlight-blue"><strong>act</strong></mark><strong>) </strong>I will use the R programming language to answer questions that will be useful for bike<mark class="highlight-blue"> </mark>sharing company.</p><h2 id="f4833db2-cd0d-476d-a1a0-70201445ea1b" class=""><strong>Scenario</strong></h2><p id="424e1e34-b559-4f74-b793-8787075ae038" class="">You are a junior data analyst working in the marketing analyst team at <strong><mark class="highlight-blue">Cyclistic</mark></strong>, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, your team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, your team will design a new marketing strategy to convert <mark class="highlight-purple"><strong>customers</strong></mark> into <mark class="highlight-yellow"><strong>subscribers</strong></mark> . But first, Cyclistic executives must approve your recommendations, so they must be backed up with compelling data insights and professional data visualizations.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7907547a-05cf-4d0f-b715-c835cde7cc36"><div style="font-size:1.5em"><span class="icon">🚲</span></div><div style="width:100%"><mark class="highlight-blue"><strong>Cyclistic:</strong></mark><strong> </strong>A bike-share program that features more than 5,800 bicycles and 600 docking stations. Cyclistic sets itself apart by also offering reclining bikes, hand tricycles, and cargo bikes, making bike-share more inclusive to people with disabilities and riders who can’t use a standard two-wheeled bike. The majority of riders opt for traditional bikes; about 8% of riders use the assistive options. Cyclistic users are more likely to ride for leisure, but about 30% use them to commute to work each day.</div></figure><h2 id="5739fce5-9a6a-4e86-ae9d-e9f218747e33" class=""><mark class="highlight-blue"><strong>Ask</strong></mark></h2><hr id="ec8d0673-81db-49de-949d-7d22f56e9b98"/><p id="8812048f-ca25-4f0d-b22b-8ec0c21965d2" class="">Three <strong>questions</strong> will guide the future marketing program:</p><ul id="ce3fb7c3-2cef-4a66-8d79-bd390e30f9f6" class="bulleted-list"><li style="list-style-type:disc">How do customers and subscribers use Cyclistic bikes differently?</li></ul><ul id="2581641b-a5c1-43e8-95c6-502be4da05e8" class="bulleted-list"><li style="list-style-type:disc">Why would customers riders buy Cyclistic annual memberships?</li></ul><ul id="afd88e29-018c-40b0-9c4b-b88877512239" class="bulleted-list"><li style="list-style-type:disc">How can Cyclistic use digital media to influence customers to become members?</li></ul><hr id="b5d1fa03-9f34-4366-afbc-61ea9fc73172"/><p id="7ad285dc-35d0-4940-8551-680576a1389f" class=""><strong>Deliverables:</strong></p><ul id="5d43fd3f-f850-4ac9-aac5-8f1af8599277" class="bulleted-list"><li style="list-style-type:disc">Insights on how annual members and casual riders use Cyclistic bikes differently</li></ul><ul id="7c777ba6-d270-4a59-8309-f98d30281210" class="bulleted-list"><li style="list-style-type:disc">Provide effective visuals and relevant data to support insights</li></ul><ul id="7b19d5a4-c127-43f0-9d4f-bfa5831c9bd8" class="bulleted-list"><li style="list-style-type:disc">Use insights to give three recommendations to convert casual riders to member riders</li></ul><h2 id="d7f166af-abd8-480b-a321-b81965f24758" class="block-color-teal"><mark class="highlight-blue"><strong>Prepare</strong></mark></h2><p id="3fbc2658-9ce6-4b56-9597-806a4a93957d" class=""><strong>Key tasks:</strong></p><ul id="8a849143-e1aa-477c-ad2b-c9ce991b2722" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Download</strong></mark> <a href="https://divvy-tripdata.s3.amazonaws.com/index.html">data</a> <strong>and </strong><mark class="highlight-blue"><strong>store</strong></mark> it appropriately.</summary><p id="4e0bda6c-3894-4801-95e3-129d47e7a8cc" class="">Create Capstone folder with <strong>CSVs</strong></p><figure id="e50d86c8-7fce-4fe4-ac25-6835e66f880b" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Untitled.png"><img style="width:2000px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Untitled.png"/></a></figure><p id="c8896854-7a1f-4695-8de9-50822f781624" class="">Download the <strong>2018 data</strong> sorted by quartet to <strong>CSV</strong> folder</p><figure id="a16a3b1a-1ebc-4385-ab64-82551e0f93f2" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-30_at_14.45.24.png"><img style="width:2064px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-30_at_14.45.24.png"/></a></figure><p id="74e9137f-3967-47e5-bc88-50e5ebb32544" class="">
+</p></details></li></ul><p id="c415bc3a-8aff-45b4-9f54-b325c77e57b8" class="">      <mark class="highlight-blue"> </mark><mark class="highlight-blue"><strong>Identify</strong></mark><strong> </strong>how it’s <strong>organized</strong>.</p><p id="bc59bfab-e85d-4be2-aa2c-e6d277d04f4b" class="">       <mark class="highlight-blue"><strong>Sort</strong></mark> and <mark class="highlight-blue"><strong>filter</strong></mark><strong>  </strong>the data.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3a00a550-ef9e-4158-942e-8b79ff66f699"><div style="font-size:1.5em"><span class="icon">💾</span></div><div style="width:100%">The data has been made available by <a href="http://motivateco.com">Motivate International Inc.</a> under this license.) 
+This is <strong>public data</strong> that you can use to explore how different customer types are using Cyclistic bikes.</div></figure><hr id="53492340-56d1-4eed-a8e7-2f4fb08505f1"/><h3 id="921f38a1-fb19-46fa-b5be-4db8fa943e38" class="">Let’s begin with <mark class="highlight-blue">R</mark></h3><pre id="8c4f6017-162b-403d-9782-4175f6bb4ca3" class="code"><code># Load required packages
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(skimr)</code></pre><p id="1bfd555e-aa6a-47d1-92cb-357e9ebc9442" class="">
+</p><pre id="2899ed5f-8923-4356-a5a0-032d843c3c8b" class="code"><code># Load data 
+tripdata_201801 &lt;- read.csv(&#x27;/Capstone/R/Capstone/CSV/Divvy_Trips_2018_Q1.csv&#x27;)
+tripdata_201802 &lt;- read.csv(&#x27;/Capstone/R/Capstone/CSV/Divvy_Trips_2018_Q2.csv&#x27;)
+tripdata_201803 &lt;- read.csv(&#x27;/Capstone/R/Capstone/CSV/Divvy_Trips_2018_Q3.csv&#x27;)
+tripdata_201804 &lt;- read.csv(&#x27;/Capstone/R/Capstone/CSV/Divvy_Trips_2018_Q4.csv&#x27;)</code></pre><p id="f0223da0-5704-4cde-bc54-716c411c29fb" class="">
+</p><p id="0c18c2a7-8bd9-4b35-ab55-b42ef6f7c3bc" class="">In the right window we see the dataframes</p><figure id="f8cf93e3-57a6-46b6-97ea-43de3d4b500f" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-30_at_20.08.20.png"><img style="width:432px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-30_at_20.08.20.png"/></a></figure><hr id="ef35867b-c323-4ce4-ad5d-a6ed3ff05618"/><p id="2106de5a-f2e4-47a0-9cb8-60c8be6051d8" class="">Identity check</p><pre id="e50d6227-867c-4893-a415-8ddf9f7a1c64" class="code"><code># Verify column names for all data frames
+colnames(tripdata_201801)
+colnames(tripdata_201802)
+colnames(tripdata_201803)
+colnames(tripdata_201804)</code></pre><p id="e733dff1-4855-4027-ad7b-b6fccaa0ed92" class="">
+</p><figure id="2bb5de90-919a-4948-9af5-5c87cdb0abac" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-30_at_20.15.34.png"><img style="width:2006px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-30_at_20.15.34.png"/></a></figure><p id="59c0cc7b-e51a-4dc5-93ad-ee5a3920a1d9" class="">
+</p><p id="c0898699-55ab-4174-bdae-7ae20fefd015" class="">Like we can see here, the 1’st quarter CSV have different columnames</p><pre id="8f230c85-b896-4512-801f-3e0312666446" class="code"><code># Check data structures and data types for all data frames
+str(tripdata_201801)
+str(tripdata_201802)
+str(tripdata_201803)
+str(tripdata_201804)</code></pre><p id="da93d401-58d0-438e-8c3a-4df32352b98d" class="">
+</p><pre id="eed8a002-27c9-471f-a427-e75d1ba83964" class="code"><code># Change column names of all the columns in the data frame 
+colnames(tripdata_201801) &lt;- c(&quot;trip_id&quot;, &quot;start_time&quot;,&quot;end_time&quot;,&quot;bikeid&quot;,
+        &quot;tripduration&quot;,&quot;from_station_id&quot;,&quot;from_station_name&quot;, &quot;to_station_id&quot;, 
+        &quot;to_station_name&quot;,&quot;usertype&quot;,&quot;gender&quot;,&quot;birthyear&quot;)</code></pre><p id="6b870650-f64e-42ac-90df-79de31d25779" class="">
+</p><pre id="aae9bbcc-b64a-4739-a170-43419b3130f6" class="code"><code># Quick look for what have we done
+head(tripdata_201801)</code></pre><p id="21cefc03-30bc-4714-82a2-a04831d45038" class="">
+</p><figure id="2fb91ab6-7b1f-4049-849d-4379ab17f747" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_11.59.29.png"><img style="width:1876px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_11.59.29.png"/></a></figure><hr id="0f7831e8-0bef-4ac1-a269-757b7ee5a448"/><p id="a50cfa71-19dc-4efc-83de-4c90a937c796" class="">
+</p><p id="43e80090-131d-4df2-b17e-eb75f8584b91" class="">Next, we want to combine all data into one data frame</p><pre id="79b54be5-dcd3-4801-8bc3-cc90a27d0d63" class="code"><code># Combine 4 data frames into one single data frame 
+all_tripdata &lt;- 
+       rbind(tripdata_201801,tripdata_201802,tripdata_201803,tripdata_201804)</code></pre><figure id="4b737967-847d-4d23-9a01-129e67d114ca" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_12.21.59.png"><img style="width:1846px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_12.21.59.png"/></a></figure><hr id="94f2f45a-7bb4-4da4-8a03-9d7f15afe8b5"/><p id="9563c68b-e1d8-49b2-a706-5c3cc48492a6" class="">
+</p><h2 id="6837407e-7dbd-4b52-9e06-f3f9003772f9" class="block-color-blue"><strong>Process</strong></h2><p id="b475a0f8-0bfc-4dae-8a3c-58615825a533" class=""><strong>Key tasks:</strong></p><p id="14551da3-5ea0-4199-8c99-c7c95805858a" class="">      Clean, Remove and Transform data</p><p id="20e35aab-e707-4b21-a569-3d393c36d75c" class="">      Document cleaning processes and results</p><hr id="0921dce3-e8af-44f6-999b-38752232a3e1"/><p id="ccc30664-eb44-4de1-8d04-29b9b8c90668" class="">Let’s see how huge our data frame</p><pre id="5535324b-d3ec-4ca3-a043-2ad3c5d6981b" class="code"><code># Dimensions of data frame
+dim(all_tripdata)
+
+[1] 3603082      12</code></pre><p id="78613e1f-ee20-4a3c-a4d7-b66e027b485d" class="">As we can see, there are 3.6 times more data than Excel can hold. There the actual advantage that the <strong><mark class="highlight-blue">R</mark></strong> language provides to us</p><hr id="e147e467-c3b0-4e8d-a671-40ea87eda5ac"/><p id="b9ac6fb7-3309-4450-839e-338e35dfec87" class="">Now we want to see that all coluns have the <strong>right data type</strong></p><pre id="d540a073-4298-46fb-b43d-e5a5ce5e981a" class="code"><code>str(all_tripdata)</code></pre><p id="037548a0-96fa-4e1d-a3f6-cb4043a38346" class="">
+</p><figure id="c089e5b5-fbc6-4948-b6c1-8272f4a3e988" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_16.40.44.png"><img style="width:1998px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_16.40.44.png"/></a></figure><p id="41e1d17d-d979-48c8-8336-15cce0bd1d67" class="">
+</p><p id="6609f6cf-b5d6-441e-8304-7bf47caffe97" class="">Looks like the columns <mark class="highlight-teal">start_time</mark> and <mark class="highlight-teal">end_time</mark> are <strong>string</strong> data type, and we need it change to  <strong>POSIXct </strong>(<mark class="highlight-blue"><code>POSIXct</code></mark><mark class="highlight-teal"><code>[1:1],</code></mark><code> </code><mark class="highlight-blue"><code>format</code></mark><mark class="highlight-teal"><code>: &quot;2015-10-19 10:15:00”</code></mark>) for our analysis.</p><pre id="ce28a824-7f6d-4230-8029-9d4f80af104d" class="code"><code># Convert start_time and end_time columns to datetime data type
+all_tripdata[[&#x27;start_time&#x27;]] &lt;- as.POSIXct(all_tripdata[[&#x27;start_time&#x27;]],
+           format=&quot;%Y-%m-%d %H:%M:%S&quot;, tz=&quot;UTC&quot;)
+
+all_tripdata[[&#x27;end_time&#x27;]] &lt;- as.POSIXct(all_tripdata[[&#x27;end_time&#x27;]],
+           format=&quot;%Y-%m-%d %H:%M:%S&quot;, tz=&quot;UTC&quot;)
+#
+str(all_tripdata)</code></pre><p id="1e3c26b4-9f9f-430b-b601-b59a244f7add" class="">
+</p><figure id="7df2d8c5-8b55-44d9-a2a4-e2279430faa9" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_17.10.14.png"><img style="width:1994px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_17.10.14.png"/></a></figure><hr id="1d9c07b9-d019-4e48-9ef2-26e26d67d0ac"/><p id="d893a3ad-3f6e-4c7c-b0b8-68b1ed412a54" class="">
+</p><p id="23c20095-959f-47c3-8d8d-4762198884da" class=""><strong>Add new columns to data frame</strong></p><pre id="d5ee25a7-a862-4d9c-bb16-a5a487a0f7f6" class="code"><code># ride_length column in minutes
+all_tripdata &lt;- all_tripdata %&gt;% mutate(ride_length = 
+        signif(difftime(end_time, start_time, units = &#x27;mins&#x27;),3))</code></pre><p id="488875b5-4e48-40c9-a67f-b093d27fb0f6" class="">
+</p><pre id="d83c868a-5362-4ecf-b6e9-4012144c5ab0" class="code"><code># day_of_week column
+all_tripdata &lt;- all_tripdata %&gt;% mutate(day_of_week = weekdays(start_time))</code></pre><p id="3ef08698-d150-4bf6-b590-6b7caf561bdf" class="">
+</p><pre id="2030fce0-30c7-43f2-855c-bcb7ea413686" class="code"><code># month column
+all_tripdata &lt;- all_tripdata %&gt;% mutate(all_tripdata, 
+        date = as.Date(all_tripdata$start_time)) %&gt;%
+        mutate(month = format(as.Date(date), &quot;%B&quot;))</code></pre><p id="b9770df6-727c-4569-9428-60bd06249262" class="">
+</p><figure id="2fada61c-d945-46e2-9022-09036796dd4b" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_18.59.28.png"><img style="width:385px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_18.59.28.png"/></a></figure><hr id="0fedb90e-8c7c-486f-a2c7-52bd61a1416f"/><p id="dc595910-6456-40aa-8e26-89513a0c52f9" class="">
+</p><h3 id="095294d3-787d-4f99-bd27-205f1eba593c" class=""><strong>Remove bad data</strong></h3><ul id="bff54e87-c112-4fd7-a079-cb0e1691d287" class="bulleted-list"><li style="list-style-type:disc">ride length &lt;= 0 minute</li></ul><ul id="468cb11e-af9c-43cf-a6fa-8b198eb73c45" class="bulleted-list"><li style="list-style-type:disc">ride length &gt; 1440 minutes (&gt;24hrs)</li></ul><p id="ee5f604d-4a62-4e80-8db5-718f516fb777" class="">I will create a new data frame (all_tripdata_v2) without these data points.</p><pre id="4ae61900-d76f-4bd1-8a47-37492fbda437" class="code"><code># Create a new data frame without records that have ride length &lt;= zero minute 
+# OR &gt; 1440 minutes
+
+all_tripdata_v2 &lt;- all_tripdata[!(all_tripdata$ride_length &lt;= 0 |
+        all_tripdata$ride_length &gt; 1440),]</code></pre><hr id="cc08c62b-6ac6-4ae5-b6c2-ec74b11791a2"/><p id="eceb7cab-2356-4c8d-87fb-93003c2816bc" class="">
+</p><h2 id="b083bbc8-288e-485e-b7f1-46c6fc01f8b2" class="block-color-blue"><strong>Analyze</strong></h2><p id="11da293a-8f3d-465a-a2e5-4ab5242cfdc5" class=""><strong>Key tasks:</strong></p><ul id="b8e08dec-5fa2-4b0d-8265-4c4a8247feeb" class="bulleted-list"><li style="list-style-type:disc">Identify patterns</li></ul><ul id="a5a82717-3bda-4c9d-b238-736510cd41e5" class="bulleted-list"><li style="list-style-type:disc">Draw conclusions</li></ul><ul id="3cf08450-0eb4-4f27-be76-e284b42d8ec0" class="bulleted-list"><li style="list-style-type:disc">Make predictions</li></ul><hr id="5a4b790f-ec4e-47f5-a962-39c414243009"/><p id="228662aa-8984-454a-873c-70ae87c32463" class="">In this phase we will calculate the Min, Max, Median, and Mean values</p><pre id="8932d3a8-27f0-496f-ad0f-9af438780fae" class="code"><code>#Min, Max, Median, Mean values for ride length
+all_tripdata_v2 %&gt;%
+  summarise(min_ride_length = min(ride_length), 
+            max_ride_length = max(ride_length), 
+            median_ride_length = median(ride_length),
+            mean_ride_length = mean(ride_length))</code></pre><p id="f3033e75-90e8-47f4-a142-e35ab4dd401d" class="">
+</p><figure id="e6bef6a9-284b-4edf-bb4f-bdfa51f2770d" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_19.49.11.png"><img style="width:580px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_19.49.11.png"/></a></figure><hr id="3fa538cd-d075-481b-adb9-82fac1801f3d"/><p id="9a04a09c-36c2-4990-8a22-b9cd6f465670" class="">
+</p><pre id="de55a5d1-1a10-4e1a-9220-e89ba5b17281" class="code"><code>#Median ride length between customer and subscriber riders
+aggregate(all_tripdata_v2$ride_length ~ all_tripdata_v2$usertype,FUN=median)</code></pre><p id="f366091e-ceed-478f-ae03-4fa1494365dc" class="">
+</p><figure id="9eb03362-9ec5-4275-9f96-13ca1fde8c1e" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_19.56.49.png"><img style="width:471px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_19.56.49.png"/></a></figure><hr id="782695a1-a792-4e3b-8bb6-c8606e6e45de"/><pre id="069f0ba0-8a4d-44a6-81bf-701104cd7293" class="code"><code>#Min ride length between customer and subscriber riders
+aggregate(all_tripdata_v2$ride_length ~ all_tripdata_v2$usertype,FUN=min)</code></pre><p id="9ea382a8-5797-45b7-a5e3-01dd70300616" class="">
+</p><figure id="daae2ef7-0b45-488f-bed4-2e9fc8a9091c" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_19.59.32.png"><img style="width:462px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_19.59.32.png"/></a></figure><p id="15e0da5d-a02f-4913-acff-2eea7d0d842a" class="">
+</p><pre id="d8bc36e3-7b14-4ec9-bbe3-2a34d9e6aa67" class="code"><code>#Max ride length between customer and subscriber riders
+aggregate(all_tripdata_v2$ride_length ~ all_tripdata_v2$usertype,FUN=max)</code></pre><p id="d00192dd-549d-406c-bbdb-e44d66322274" class="">
+</p><figure id="3d69147a-f1ac-4f93-9ed1-f3d2ac4ee055" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.00.05.png"><img style="width:457px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.00.05.png"/></a></figure><p id="25a5ee92-b4f0-4410-9d18-04eaeee9f3ef" class="">Like we see here, they are pretty same for both customer/subscriber groups</p><hr id="c823793a-7cf8-462e-b443-e4f4dd32b686"/><p id="f2cccf71-0d4e-43af-98a2-5ab0584d148e" class=""><strong>Day of week analysis</strong></p><p id="978c3cb8-32b4-4050-906d-926c0c8216ab" class="">
+</p><p id="c916946a-a373-4e09-aa76-00787968f1db" class="">Lets start by ordering days of week, cause <mark class="highlight-teal">day_of_week</mark> column have string data type.</p><pre id="c91e3202-666f-4bdf-95df-f46ca262c2c2" class="code"><code># Assign the correct order to each day of the week
+all_tripdata_v2$day_of_week &lt;- 
+  ordered(all_tripdata_v2$day_of_week, 
+  levels = c(&#x27;Monday&#x27;, &#x27;Tuesday&#x27;, &#x27;Wednesday&#x27;, &#x27;Thursday&#x27;, 
+             &#x27;Friday&#x27;, &#x27;Saturday&#x27;, &#x27;Sunday&#x27;))</code></pre><p id="1e9ef0f2-f084-48f4-a896-12f0a49e5ad9" class="">
+</p><pre id="4392b16b-63e5-47de-b464-693b9a9a5942" class="code"><code># Average ride length between customer and subscriber riders 
+# for each day of the week
+aggregate(all_tripdata_v2$ride_length ~ all_tripdata_v2$usertype 
+        + all_tripdata_v2$day_of_week,FUN=mean)</code></pre><p id="be08ea2b-160e-4bc6-a76c-eec0137cb705" class="">
+</p><figure id="4bab9798-d755-4996-baf1-bbb13c54f9e1" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.06.56.png"><img style="width:681px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.06.56.png"/></a></figure><p id="eaa4ab72-edfa-43cf-b06b-509f2b5a421c" class="">
+</p><pre id="56f5a14b-31a6-433c-9543-cd8950b283de" class="code"><code># Median ride length between customer and subscriber riders 
+# for each day of the week
+aggregate(all_tripdata_v2$ride_length ~ all_tripdata_v2$usertype 
+        + all_tripdata_v2$day_of_week,FUN=median)</code></pre><p id="b221fa24-5afe-48d0-8f84-501c96b89931" class="">
+</p><figure id="ffef3653-ee1e-4fc3-9c84-b3762eb900c8" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.10.03.png"><img style="width:675px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.10.03.png"/></a></figure><hr id="08c7ce4a-5796-40a9-9a95-fed14fe1d1e8"/><p id="04500fd3-7407-4e71-9365-606e7b7fe630" class=""><strong>Month of year analysis</strong></p><pre id="de55dd83-c272-4979-a152-fd1f14996356" class="code"><code># Assign the correct order to each month of the year
+all_tripdata_v2$month &lt;- ordered(all_tripdata_v2$month, 
+        levels = c(&#x27;January&#x27;, &#x27;February&#x27;, &#x27;March&#x27;, &#x27;April&#x27;, &#x27;May&#x27;, &#x27;June&#x27;, 
+        &#x27;July&#x27;, &#x27;August&#x27;, &#x27;September&#x27;, &#x27;October&#x27;, &#x27;November&#x27;, &#x27;December&#x27;))</code></pre><p id="52214bbc-3ecf-422b-8903-bd35d12ab95d" class="">
+</p><pre id="1038e56a-112e-48bd-824c-4105d86ff5b1" class="code"><code># Average ride length between customer and subscriber riders for 
+# each month of the year
+all_tripdata_v2 %&gt;%
+  group_by(usertype, month) %&gt;%
+  summarise(average_ride_length = mean(ride_length), .groups = &#x27;drop&#x27;) %&gt;%
+  arrange(month)</code></pre><p id="bec79a93-5145-4a6a-9d19-07e185c85516" class="">
+</p><figure id="0f761e7c-a774-42ec-93f6-a1b9b1590153" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.15.09.png"><img style="width:364px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.15.09.png"/></a></figure><p id="9a113e7d-7182-4142-84f4-fa86dd939085" class="">
+</p><pre id="a4267e85-b88e-48f3-a36e-eaae3bcd1a45" class="code"><code># Median ride length between customer and subscriber riders for each month 
+# of the year
+
+all_tripdata_v2 %&gt;%
+  group_by(usertype, month) %&gt;%
+  summarise(median_ride_length = median(ride_length), .groups = &#x27;drop&#x27;) %&gt;%
+  arrange(month)</code></pre><p id="41a07657-387a-44fd-a904-012fa060a0fc" class="">
+</p><figure id="fa29fb1b-2f36-4378-85a1-38199df2fab3" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.18.26.png"><img style="width:359px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.18.26.png"/></a></figure><p id="12a73606-9809-430c-9ecc-84684941f688" class="">
+</p><pre id="4cd75df0-7513-4084-b1b6-1584811e102a" class="code"><code># Number of ride between customer and subscriber riders 
+# for each month of the year
+all_tripdata_v2 %&gt;%
+  group_by(usertype, month) %&gt;%
+  summarise(number_of_ride = n(), .groups = &#x27;drop&#x27;) %&gt;%
+  arrange(month)</code></pre><p id="e7bbbe77-6088-4712-a383-f6ed169dfd31" class="">
+</p><figure id="3895703b-e337-4434-b9ff-74d605fe6198" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.21.15.png"><img style="width:339px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.21.15.png"/></a></figure><hr id="d417064f-eeac-42b2-9e28-8c7ed7c5c3b7"/><p id="919d3ce5-e716-46bd-b52f-1cd724218d7a" class=""><strong>Start stations analysis</strong></p><pre id="b5bb193c-e866-46de-81e6-b1a779a8f0e9" class="code"><code>#Most popular start stations for usertype
+all_tripdata_v2 %&gt;%
+  group_by(from_station_name, usertype) %&gt;%
+  summarise(number_of_ride = n(), .groups = &#x27;drop&#x27;) %&gt;%
+  filter(from_station_name != &quot;&quot;, usertype != &#x27;member&#x27;) %&gt;%
+  arrange(-number_of_ride) %&gt;%
+  head(n=20)</code></pre><p id="3bc49e26-cde2-42c2-928c-9bb46ca3b3ed" class="">
+</p><figure id="800e0534-0377-4bc5-a7b2-3e8f2bca7a9e" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.24.42.png"><img style="width:533px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.24.42.png"/></a></figure><hr id="70c19d7e-438a-48fd-b5ac-2d1d46bfd7e5"/><p id="dd0fc8c2-b4bc-422b-a810-9069779a3fd5" class="">
+</p><h2 id="4bfdce24-0467-4a82-a396-36a28325beb4" class="block-color-blue"><strong>Share</strong></h2><p id="c556c40b-08fb-44c6-a629-40f7a226d034" class=""><strong>Key tasks:</strong></p><ul id="910cc21d-90fe-4771-a05b-49ccb7cf2172" class="bulleted-list"><li style="list-style-type:disc">Create effective visuals</li></ul><ul id="d637c4b9-e411-4ac3-ab8e-0da5d46f7410" class="bulleted-list"><li style="list-style-type:disc">Create a story for data</li></ul><ul id="98541c9e-2365-42bb-978f-88d3b65f15f7" class="bulleted-list"><li style="list-style-type:disc">Share insights to stakeholders</li></ul><hr id="79568d50-a338-486a-879d-4e5a7ee0addd"/><p id="7f247430-adfe-41e3-9d4b-2ad26bb60377" class="">
+</p><pre id="d95beb05-38d3-412f-9d1c-57921d19b920" class="code"><code>#Visualize average ride length by usertype for each day of the week
+all_tripdata_v2 %&gt;%
+  group_by(usertype, day_of_week) %&gt;%
+  summarise(average_ride_duration = mean(ride_length), .groups = &#x27;drop&#x27;) %&gt;%
+  ggplot(aes(x = day_of_week, y = average_ride_duration, fill = usertype)) + 
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;)+
+  scale_fill_manual(values=c(&#x27;#0C6E99&#x27;,&#x27;#0E7B6C&#x27;))+
+  theme_minimal()+ 
+  ggtitle(&quot;Average ride length by usertype for each day of the week&quot;)+ 
+  labs(y = &quot;Average ride duration(min)&quot;, x = &quot;Day of week&quot;)</code></pre><p id="74166189-a0a0-4ec0-bec5-2c679b9da762" class="">
+</p><figure id="47db61ac-f025-4ebc-b99d-6705d3854f1a" class="image"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Untitled%201.png"><img style="width:699px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Untitled%201.png"/></a></figure><p id="b0ce6506-89e9-4bd5-a154-f0bb11cce87e" class="">As we can see here, the <mark class="highlight-teal">average ride lenght</mark> of customers are way higher than subscribers.</p><p id="b1f3574b-1dbc-4389-bde0-2ad28f4df532" class="">
+</p><pre id="a9a9a2e8-54b7-4c22-8f2f-572f397a57d1" class="code"><code>#Average ride length between casual and member riders
+all_tripdata_v2 %&gt;%
+  group_by(usertype) %&gt;%
+  summarise(average_ride_duration = mean(ride_length))</code></pre><p id="b52db6b2-0160-4f7d-9ef0-275de4dc2733" class="">
+</p><figure id="58ca3d38-f93c-4807-a92e-ff3312e232c0" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-11-01_at_15.02.25.png"><img style="width:298px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-11-01_at_15.02.25.png"/></a></figure><p id="3320e4f3-4a20-434b-af9e-002293bdbf22" class="">
+</p><p id="c843d365-2995-4e22-b939-bd39b0a3cacb" class="">The difference between customers and subscribers average ride length are huge, but we remember (from the <strong><mark class="highlight-blue">analyze</mark></strong> path), that subscribers rent bikes much more often:</p><p id="0d14c7c1-deb7-4469-a00b-43907ece30cf" class="">
+</p><figure id="858a631f-c387-485d-8d3a-b41116d81d56" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.21.15.png"><img style="width:339px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Screenshot_2022-10-31_at_20.21.15.png"/></a></figure><p id="48b7cf89-cc77-4664-9bf9-002589868a79" class="">
+</p><pre id="c76a5e0c-82f6-46d2-babb-5a7ff7c42d3e" class="code"><code># Visualize number of ride by rider type for each day of the week
+all_tripdata_v2 %&gt;%
+  group_by(usertype, day_of_week) %&gt;%
+  summarise(number_of_ride = n(), .groups = &#x27;drop&#x27;) %&gt;%
+  ggplot(aes(x = day_of_week, y = number_of_ride, fill = usertype)) +
+  geom_bar(position = &#x27;dodge&#x27;, stat = &#x27;identity&#x27;)+
+  scale_fill_manual(values=c(&#x27;#0C6E99&#x27;,&#x27;#0E7B6C&#x27;))+
+  theme_minimal()+ 
+  ggtitle(&quot;Numbers of rides by rider type for each day of the week&quot;)+ 
+  labs(y = &quot;Numbers of rides&quot;, x = &quot;Day of week&quot;)</code></pre><p id="78d16bce-ac61-4525-a59c-8c56f92b81c9" class="">
+</p><figure id="5574f36b-b9a1-4d82-8c29-74f2f7bafcf1" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Rplot01.png"><img style="width:636px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Rplot01.png"/></a></figure><p id="0ba812ea-539f-4d58-91dd-047019a78a27" class="">As we notice, subscribers mostly use the bike-share program on <strong>weekdays</strong> and customers on <strong>weekends</strong>, but on weekends this trend changes and difference between rider types are much lower.</p><hr id="28747bf6-4e7f-46ef-8a27-2e9ba0e7dd8e"/><p id="3192049b-93c8-4065-a220-abb4c847ce9b" class="">
+</p><p id="0393d93e-8c9c-4368-a439-fd336e75bdc3" class="">Lets compare by months :</p><pre id="83f26695-145b-409f-828e-e168c23d948a" class="code"><code>#Visualize subscribers rider&#x27;s number of ride for each month 
+all_tripdata_v2 %&gt;%
+  group_by(month, usertype) %&gt;%
+  summarise(number_of_ride = n(), .groups = &#x27;drop&#x27;) %&gt;%
+  filter(usertype == &#x27;Subscriber&#x27;) %&gt;%
+  ggplot(aes(x = month, y = number_of_ride, fill = usertype)) +
+  geom_bar(position = &#x27;dodge&#x27;, stat = &#x27;identity&#x27;) + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  scale_fill_manual(values=c(&#x27;#0E7B6C&#x27;))+
+  theme_minimal()+ 
+  ggtitle(&quot;Numbers of subscriber rides by month&quot;)+ 
+  labs(y = &quot;Numbers of rides&quot;, x = &quot;Month&quot;)</code></pre><p id="6ebe1c40-2bdd-41d1-a2a2-0305a556dfbd" class="">
+</p><figure id="eb1b01d3-62ad-48dc-87a7-3a58f6475cbd" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Rplot02.png"><img style="width:636px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Rplot02.png"/></a></figure><p id="cc338b8a-ba46-4cc5-bc4e-5fd26d889ba2" class="">
+</p><pre id="6c79a708-4702-4d14-b524-76ff4e4fc76f" class="code"><code>#Visualize customer rider&#x27;s number of ride for each month 
+all_tripdata_v2 %&gt;%
+  group_by(month, usertype) %&gt;%
+  summarise(number_of_ride = n(), .groups = &#x27;drop&#x27;) %&gt;%
+  filter(usertype == &#x27;Customer&#x27;) %&gt;%
+  ggplot(aes(x = month, y = number_of_ride, fill = usertype)) +
+  geom_bar(position = &#x27;dodge&#x27;, stat = &#x27;identity&#x27;) + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  scale_fill_manual(values=c(&#x27;#0C6E99&#x27;))+
+  theme_minimal()+ 
+  ggtitle(&quot;Numbers of customer rides by month&quot;)+ 
+  labs(y = &quot;Numbers of rides&quot;, x = &quot;Month&quot;)</code></pre><p id="4a8848aa-c8d3-4ea6-a9f5-c41c61fe9f9f" class="">
+</p><figure id="57312bc9-4f8c-44ee-b551-83c631e559b2" class="image" style="text-align:left"><a href="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Rplot03.png"><img style="width:636px" src="Capstone%20projet%20using%20R%20ab75738bc5174cf2b13bf1ccb9c29916/Rplot03.png"/></a></figure><h2 id="5a317311-f434-4c9f-a7b6-c376aab00b34" class="block-color-blue"><strong>Act</strong></h2><p id="7ba385c5-78ec-4be6-9684-2450bb0f0638" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong>Key tsks:</strong></strong></strong></strong></strong></strong></strong></strong></strong></p><ul id="8b5ddded-8700-4074-8889-6732d18d87aa" class="bulleted-list"><li style="list-style-type:disc">Give recommendations based on insights</li></ul><ul id="47b18ca6-11e2-467f-9124-afeecfca94fb" class="bulleted-list"><li style="list-style-type:disc">Solve problems</li></ul><ul id="aa482358-a47d-4fda-ad1e-363687cf8f22" class="bulleted-list"><li style="list-style-type:disc">Create something new</li></ul><hr id="86b6ef19-cab9-482b-bbee-90be675c2e55"/><p id="1c553f5c-8f7d-4401-8979-376a1119eee0" class="">Now we can look back for questions that we have <mark class="highlight-blue">asked</mark> before analysis:</p><p id="69c3de37-183d-45b9-b1a6-ee9745db20f8" class="">
+</p><ol type="1" id="2221b9d5-1905-4e20-91be-e7c359f31d54" class="block-color-blue_background numbered-list" start="1"><li>How do customers and subscribers use Cyclistic bikes differently?</li></ol><p id="2357c2b8-54a0-470e-a9c9-f33d6d0a9ba8" class=""><mark class="highlight-yellow">Subscribers </mark>mostly use the bike-share program on weekdays, their demand for renting bikes rises throughout the summer (<mark class="highlight-yellow">401906</mark> rides in August) and falls during the winter (<mark class="highlight-yellow">99517</mark> rides in February).</p><p id="9a703fb0-2cb7-4f31-8b15-800b81c89e63" class=""><mark class="highlight-purple">Customers</mark>, on the other hand, prefer to ride on weekends, and like subscribers their demand rises throughout the summer (<mark class="highlight-purple">128634</mark> rides in August) and falls during the winter (<mark class="highlight-purple">3396 </mark>rides in February), but the difference is much more bigger: <mark class="highlight-yellow">- 75%</mark> for subscribers and <mark class="highlight-purple">-97%</mark> for customers.</p><p id="e899b0ac-a74f-4106-9ec7-2a92295cd62a" class="">
+</p><ol type="1" id="9bea1e9d-926d-4fb0-b043-2b2b94f42bdc" class="block-color-blue_background numbered-list" start="2"><li>Why would customers riders buy Cyclistic annual memberships?</li></ol><p id="8e295a7b-e611-4461-8c5b-4c14d3f619ef" class=""><mark class="highlight-purple">Customers</mark> have higher average trip duration (<mark class="highlight-purple">27.9</mark> min. compare to subscriber’s <mark class="highlight-yellow">9.55</mark> min.) which verifies the claim <em>that customers are tourists</em> who uses bikes for a longer duration of time.</p><p id="f9fdb465-bed6-468f-a488-0eca1be2b72c" class="">Bike share program manager needs to provide <strong><em>offers on weekends trips</em></strong> to increase duration of trip time.</p><p id="9cb67654-3beb-4cd2-bc40-01e75e828818" class="">I will recommend to <strong><em>collaborate with hotels</em></strong>, or <strong><em>build more sharing stations</em></strong><strong> </strong>near them (in case they already have sharing stations near public/culture and other popular places).</p><p id="d1163183-b0d2-41b5-88ac-7ad166cb8246" class="">
+</p><ol type="1" id="d2975c89-1be8-47ac-9bc8-add721d31fac" class="block-color-blue_background numbered-list" start="3"><li>How can Cyclistic use digital media to influence customers to become members?</li></ol><p id="5639ace0-f10e-49af-8ed9-f07ea626707a" class="">Cyclistic can start an <strong><em>advertising company</em></strong> on annual membership during peak months from July - September</p><p id="90fd95e8-1dd0-4f4f-aac8-721d85252a7c" class="">Provide a <strong><em>membership for weekday rentals</em></strong>.</p><p id="d2fcb2ed-8854-4036-9654-68acdea706c8" class="">
+</p></div></article></body></html>
